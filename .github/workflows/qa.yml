@@ -50,7 +50,6 @@ jobs:
 
   test-with-fail:
     runs-on: 'ubuntu-latest'
-    continue-on-error: true
     steps:
       - name: Checkout repository
         uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
@@ -58,6 +57,7 @@ jobs:
           persist-credentials: false
 
       - name: Run action with defaults
+        continue-on-error: true
         uses: ./
         with:
           si-path: 'examples/si-invalid.yml'
