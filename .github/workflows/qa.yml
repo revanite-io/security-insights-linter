@@ -60,7 +60,7 @@ jobs:
       - name: Run action with defaults
         uses: ./
         with:
-          si-path: 'examples/si-invalid'
+          si-path: 'examples/si-invalid.yml'
 
   all-tests-pass:
     if: always()
