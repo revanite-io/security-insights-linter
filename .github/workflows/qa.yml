@@ -57,10 +57,17 @@ jobs:
           persist-credentials: false
 
       - name: Run action with defaults
+        id: linter
         continue-on-error: true
         uses: ./
         with:
           si-path: 'examples/si-invalid.yml'
+
+      - name: Confirm step failure
+        env:
+          OUTCOME: ${{ steps.linter.outcome }}
+        run: |
+          [[ "${OUTCOME}" == "failure" ]] || { >&2 echo "expected step \"linter\" to fail"; exit 1; }
 
   all-tests-pass:
     if: always()
@@ -76,4 +83,3 @@ jobs:
         uses: re-actors/alls-green@05ac9388f0aebcb5727afa17fcccfecd6f8ec5fe # v1.2.2
         with:
           jobs: ${{ toJSON(needs) }}
-          allowed-failures: test-with-fail
