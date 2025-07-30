@@ -1,0 +1,62 @@
+header:
+  schema-version: 2.1.0
+  last-updated: '2025-07-29'
+  last-reviewed: '2025-07-29'
+  url: https://github.com/revanite-io/security-insights-linter
+
+project:
+  name: "Security Insights Linter"
+  administrators:
+    - name: Eddie Knight
+      affiliation: Sonatype
+      email: knight@linux.com
+      primary: true
+    - name: Jason Meridth
+      affiliation: GitHub
+      email: jmeridth@gmail.com
+      primary: false
+  documentation:
+    code-of-conduct: https://github.com/revanite-io/ssecurity-insights-linter?tab=coc-ov-file#readme
+  repositories:
+    - name: security-insights-linter
+      url: https://github.com/revanite-io/security-insights-linter
+      comment: |
+        The repository contains a reusable GitHub Action for validation
+        of security insights files.
+  vulnerability-reporting:
+    reports-accepted: false
+    bug-bounty-available: false
+
+repository:
+  url: https://github.com/revanite-io/security-insights-linter
+  status: active
+  accepts-change-request: true
+  accepts-automated-change-request: true
+  core-team:
+    - name: Eddie Knight
+      affiliation: Sonatype
+      email: knight@linux.com
+      primary: true
+    - name: Jason Meridth
+      affiliation: GitHub
+      email: jmeridth@gmail.com
+      primary: false
+    - name: Travis Truman
+      affiliation: Independent
+      email: trumant@gmail.com
+      primary: false
+    - name: Alex Speasmaker
+      affiliation: USAA
+      email: alex.speasmaker@gmail.com
+      primary: false
+    - name: Jennifer Power
+      affiliation: Red Hat
+      primary: false
+  license:
+    url: https://github.com/revanite-io/security-insights-linter?tab=Apache-2.0-1-ov-file#readme
+    expression: Apache-2.0
+  security:
+    assessments:
+      self:
+        comment: |
+          Self assessment has not yet been completed.

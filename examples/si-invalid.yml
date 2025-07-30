@@ -1,0 +1,16 @@
+header:
+  schema-version: 2.1.0
+  last-updated: '2025-07-29'
+  last-reviewed: '2025-07-29'
+  url: https://github.com/revanite-io/security-insights-linter
+
+project:
+  name: "An Invalid Example"
+  administrators:
+    - name: John Doe
+      affiliation: Example
+      email: john.doe@example.com
+      primary: true
+  repositories:
+    - name: security-insights-linter
+      url: https://github.com/example-io/example

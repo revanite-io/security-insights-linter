@@ -1,0 +1,85 @@
+name: Quality Assurance
+on:
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "**" ]
+
+permissions: {}
+
+jobs:
+  test-defaults:
+    runs-on: 'ubuntu-latest'
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+      - name: Run action with defaults
+        uses: ./
+
+  test-no-cue-setup:
+    runs-on: 'ubuntu-latest'
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+
+      - uses: cue-lang/setup-cue@a93fa358375740cd8b0078f76355512b9208acb1 # v1.0.1
+        with:
+          version: 'latest'
+
+      - name: Run action with defaults
+        uses: ./
+        with:
+          skip-cue-setup: 'true'
+
+  test-with-schema-version:
+    runs-on: 'ubuntu-latest'
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+
+      - name: Run action with defaults
+        uses: ./
+        with:
+          schema-version: 'v2.1.0'
+
+  test-with-fail:
+    runs-on: 'ubuntu-latest'
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@11bd71901bbe5b1630ceea73d27597364c9af683 # v4.2.2
+        with:
+          persist-credentials: false
+
+      - name: Run action with defaults
+        id: linter
+        continue-on-error: true
+        uses: ./
+        with:
+          si-path: 'examples/si-invalid.yml'
+
+      - name: Confirm step failure
+        env:
+          OUTCOME: ${{ steps.linter.outcome }}
+        run: |
+          [[ "${OUTCOME}" == "failure" ]] || { >&2 echo "expected step \"linter\" to fail"; exit 1; }
+
+  all-tests-pass:
+    if: always()
+    needs:
+      - test-defaults
+      - test-no-cue-setup
+      - test-with-schema-version
+      - test-with-fail
+    runs-on: ubuntu-latest
+    steps:
+      - name: check test jobs
+        if: (github.event_name != 'pull_request') || !github.event.pull_request.head.repo.fork
+        uses: re-actors/alls-green@05ac9388f0aebcb5727afa17fcccfecd6f8ec5fe # v1.2.2
+        with:
+          jobs: ${{ toJSON(needs) }}
